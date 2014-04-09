@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>        
+        <record id="cbk_mrp_routing_workcenter_tree_view" model="ir.ui.view">
+            <field name="name">cbk.mrp.routing.workcenter.tree</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">            
+                <data>
+                    <field name="hour_nbr" position="after">
+                        <field name="ref_hour_nbr"/>
+                    </field>
+                </data>
+            </field> 
+        </record>      
+       
+        <record id="cbk_mrp_routing_workcenter_form_view" model="ir.ui.view">
+            <field name="name">cbk.mrp.routing.workcenter.form</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">            
+                <data>
+                    <field name="hour_nbr" position="after">
+                        <field name="ref_hour_nbr" widget="float_time"/>
+                    </field>
+                </data>                  
+            </field> 
+        </record>                     
+    </data>
+</openerp>
