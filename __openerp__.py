@@ -33,7 +33,7 @@
     'category': '',
     'sequence': 26,
     'demo': [],
-    'data': ['mrp_view.xml'],
+    'data': ['mrp_view.xml', 'sched_monitoring_view.xml'],
     'test': [],
     'installable': True,
     'application': False,

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>        
+        <record id="view_mrp_sched_monitoring_tree" model="ir.ui.view">
+            <field name="name">mrp.sched.monitoring.tree</field>
+            <field name="model">mrp.sched.monitoring</field>
+            <field name="arch" type="xml">
+                <tree string="MRP Schedule Monitoring">  
+                    <field name="day" select="1"/>                
+                    <field name="production_hours" select="1" widget="float_time"/> 
+                    <field name="ref_production_hours" select="1" widget="float_time"/>
+                    <field name="scheduled_hours" select="1" widget="float_time"/>
+                    <field name="efficiency" select="1"/>
+                    <field name="ref_efficiency" select="1"/>                                                                        
+                </tree>
+            </field>
+        </record>    
+
+        <record id="view_mrp_sched_monitoring_form" model="ir.ui.view">
+            <field name="name">mrp.sched.monitoring.form</field>
+            <field name="model">mrp.sched.monitoring</field>
+            <field name="arch" type="xml">
+                <form string="MRP Schedule Monitoring">  
+                    <field name="day" select="1"/>                
+                    <field name="production_hours" select="1" widget="float_time"/> 
+                    <field name="ref_production_hours" select="1" widget="float_time"/>
+                    <field name="scheduled_hours" select="1" widget="float_time"/>
+                    <field name="efficiency" select="1"/>
+                    <field name="ref_efficiency" select="1"/>                                                                        
+                </form>
+            </field>
+        </record>      
+
+        <record id="view_mrp_sched_monitoring_calendar" model="ir.ui.view">
+            <field name="name">mrp.sched.monitoring.calendar</field>
+            <field name="model">mrp.sched.monitoring</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <calendar color="efficiency_level" date_start="day" date_delay="production_hours" string="MRP Sched Monitoring">
+                    <field name="production_hours"/>
+                    <field name="efficiency"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="action_mrp_sched_monitoring" model="ir.actions.act_window">
+            <field name="name">Sched. Monitoring</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.sched.monitoring</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>            
+            <field name="help">MRP Schedule Monitoring</field>
+        </record>
+
+        <record id="view_mrp_reorder_queue" model="ir.ui.view">
+            <field name="name">Sched. Monitoring</field>
+            <field name="model">mrp.sched.monitoring.runner</field>
+            <field name="priority" eval="15"/>
+            <field name="arch" type="xml">
+                <form string="Reorder production queue" version="7.0">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <footer>
+                        <button special="cancel" string="_Cancel" icon='gtk-cancel'/>
+                        or
+                         <button name="run_monitoring" string="Run" type="object" icon="terp-gtk-go-back-rtl"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mrp_sched_monitoring_run" model="ir.actions.act_window">
+            <field name="name">Run Sched. Monitoring</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.sched.monitoring.runner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>            
+            <field name="help">Run MRP Schedule Monitoring</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_mrp_reorder_queue"/>
+        </record>
+
+        <record forcecreate="True" model="ir.cron" id="ir_cron_mrp_sched_monitoring">
+            <field name='name'>Run MRP Sched. Monitoring </field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+            <field name="doall" eval="False" />
+            <field name="model">mrp.sched.monitoring</field>
+            <field name="function">run_monitoring</field>
+            <field name="args">()</field>
+        </record>
+
+        <menuitem name="MRP Sched Monitoring" id="menu_action_sched_monitoring" groups="mrp.group_mrp_manager,mrp.group_mrp_user" parent="mrp.menu_mrp_planning" action="action_mrp_sched_monitoring" sequence="22"/>
+
+        <menuitem name="Run MRP Sched Monitoring" id="menu_action_sched_monitoring_runner" groups="mrp.group_mrp_manager,mrp.group_mrp_user" parent="mrp.menu_mrp_planning" action="action_mrp_sched_monitoring_run" sequence="23"/>
+
+    </data>
+</openerp>
